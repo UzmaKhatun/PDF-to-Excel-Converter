@@ -38,64 +38,19 @@ pip install -r requirements.txt
 - **re** (built-in) - Pattern recognition for data parsing
 - **numpy** - Data processing and transformation
 
-## Usage
-
-### Basic Usage
-
-```python
-from pdf_to_excel import convert_pdf_to_excel
-
-# Convert a PDF file to Excel
-convert_pdf_to_excel('input.pdf', 'output.xlsx')
-```
-
-### Command Line Usage
-
-```bash
-python pdf_to_excel.py input.pdf output.xlsx
-```
-
-### Advanced Options
-
-```python
-from pdf_to_excel import PDFConverter
-
-# Create converter instance
-converter = PDFConverter()
-
-# Convert with custom options
-converter.convert(
-    pdf_path='input.pdf',
-    excel_path='output.xlsx',
-    pages='all',  # or specify pages like '1-3,5'
-    clean_data=True,  # Remove blank rows/columns
-    multiple_sheets=True  # Save each page as separate sheet
-)
-```
-
-## Example
-
-```python
-# Example: Convert invoice PDF to Excel
-from pdf_to_excel import convert_pdf_to_excel
-
-# Convert invoice
-convert_pdf_to_excel('invoice.pdf', 'invoice_data.xlsx')
-
-print("Conversion completed successfully!")
-```
-
 ## Project Structure
 
 ```
 PDF-to-Excel-Converter/
-├── pdf_to_excel.py      # Main conversion script
-├── requirements.txt     # Python dependencies
-├── README.md           # Project documentation
-├── examples/           # Example PDF files
-│   └── sample.pdf
-└── output/            # Generated Excel files
-    └── sample.xlsx
+├── pdf_extractor.py                 # Main conversion script
+├── structured_data_evaluation.py    # Evaluation file
+├── evaluation_report.txt            # Evaluation report 
+├── app.py                           # full code + ui
+├── Sample_Data_Input.pdf            # Example PDF files
+├── output.xlsx                      # Generated Excel files
+├── requirements.txt                 # Python dependencies
+└── README.md                        # Project documentation
+    
 ```
 
 ## How It Works
@@ -143,30 +98,6 @@ pip install -r requirements.txt
 - Check if the PDF is password-protected or encrypted
 - Verify the PDF structure is readable
 - Try adjusting parsing parameters for different document layouts
-
-### Installation Issues
-```bash
-# Try upgrading pip
-pip install --upgrade pip
-
-# Install dependencies individually
-pip install pandas tabula-py openpyxl
-```
-
-## Contributing
-
-Contributions are welcome! Please follow these steps:
-
-1. Fork the repository
-2. Create a new branch (`git checkout -b feature/improvement`)
-3. Make your changes
-4. Commit your changes (`git commit -am 'Add new feature'`)
-5. Push to the branch (`git push origin feature/improvement`)
-6. Create a Pull Request
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Author
 
