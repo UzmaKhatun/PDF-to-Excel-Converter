@@ -1,42 +1,138 @@
-# PDF to Excel Converter
+# AI-Powered PDF to Excel Data Extractor
 
-A powerful Python-based tool that converts **unstructured data** from PDF files into **structured, organized Excel spreadsheets**. This tool intelligently parses raw text, tables, and mixed content from PDFs and transforms them into clean, tabular data ready for analysis.
+An intelligent document processing system that transforms unstructured PDF content into structured Excel spreadsheets using Claude AI.
 
-## Features
+## 🎯 Project Overview
 
-- 📄 **Unstructured Data Processing** - Handles PDFs with raw text, mixed layouts, and non-tabular content
-- 🔄 **Smart Data Structuring** - Automatically identifies patterns and converts unstructured data into structured format
-- 📊 **Excel Export** - Generates clean, well-organized Excel spreadsheets (.xlsx)
-- 🧹 **Intelligent Data Parsing** - Extracts key information and organizes it into rows and columns
-- 📑 **Multi-page Support** - Processes complex, multi-page PDF documents
-- 🎯 **Easy to Use** - Simple command-line interface or Python function calls
-- ⚡ **Fast Processing** - Efficiently handles large PDF files with complex layouts
+This tool automatically extracts information from PDF documents and organizes it into a clean Key-Value-Comments format in Excel, with zero hardcoded keys. The AI determines what information to extract and how to structure it.
 
-## Prerequisites
+## ✨ Features
 
-- Python 3.7 or higher
-- pip (Python package installer)
+- **100% Data Capture**: No information is lost or summarized
+- **AI-Powered Extraction**: Uses Groq AI to intelligently identify key-value pairs
+- **Dynamic Key Detection**: No predefined keys - AI determines appropriate field names
+- **Contextual Comments**: Extracts and preserves contextual information
+- **Original Language Preservation**: Maintains exact wording from source documents
 
-## Installation
+## 📋 Requirements
 
-1. Clone the repository:
+- Python 3.8 or higher
+- Groq API key (from Anthropic)
+
+## 🚀 Installation
+
+1. **Clone the repository**
 ```bash
-git clone https://github.com/UzmaKhatun/PDF-to-Excel-Converter.git
-cd PDF-to-Excel-Converter
+git clone <your-repo-url>
+cd pdf-to-excel-extractor
 ```
 
-2. Install required dependencies:
+2. **Install dependencies**
 ```bash
 pip install -r requirements.txt
 ```
 
-## Dependencies
+3. **Set up API key**
 
-- **pandas** - Data manipulation and structuring
-- **PyPDF2** or **pdfplumber** - PDF text extraction
-- **openpyxl** - Excel file creation and manipulation
-- **re** (built-in) - Pattern recognition for data parsing
-- **numpy** - Data processing and transformation
+Option A - Environment Variable (Recommended):
+```bash
+export GROQ_API_KEY="your-api-key-here"
+```
+
+Option B - Hardcode in script:
+Edit `pdf_extractor.py` and replace:
+```python
+API_KEY = "your-api-key-here"
+```
+
+## 📖 Usage
+
+### Basic Usage
+
+Place your PDF file in the project directory and run:
+
+```bash
+python pdf_extractor.py
+```
+
+By default, it will:
+- Read from: `Data Input.pdf`
+- Output to: `Output.xlsx`
+
+### Custom File Paths
+
+Edit the `main()` function in `pdf_extractor.py`:
+
+```python
+INPUT_PDF = "your_file.pdf"
+OUTPUT_EXCEL = "your_output.xlsx"
+```
+
+### Using as a Module
+
+```python
+from pdf_extractor import PDFToExcelExtractor
+
+# Initialize
+extractor = PDFToExcelExtractor(api_key="your-api-key")
+
+# Process
+extractor.process("input.pdf", "output.xlsx")
+```
+
+## 📊 Output Format
+
+The generated Excel file contains:
+
+| # | Key | Value | Comments |
+|---|-----|-------|----------|
+| 1 | First Name | Vijay | |
+| 2 | Date of Birth | 15-Mar-89 | |
+| 3 | Age | 35 years | As on year 2024... |
+| 4 | Birth City | Jaipur | Born and raised in the Pink City... |
+
+## 🔧 How It Works
+
+1. **PDF Extraction**: Reads all text from PDF using PyPDF2
+2. **AI Processing**: Sends text to Groq AI with specific extraction instructions
+3. **Structuring**: AI identifies key-value pairs and contextual comments
+4. **Excel Generation**: Creates formatted Excel file with all extracted data
+
+## 🎓 Using Different LLM Providers
+
+### Switch to OpenAI (GPT-4)
+
+1. Install OpenAI package:
+```bash
+pip install openai
+```
+
+2. Replace the `extract_structured_data` method:
+```python
+from openai import OpenAI
+
+def extract_structured_data(self, pdf_text):
+    client = OpenAI(api_key=self.api_key)
+    
+    response = client.chat.completions.create(
+        model="gpt-4-turbo-preview",
+        messages=[
+            {"role": "system", "content": "You are an expert data extraction system."},
+            {"role": "user", "content": f"{prompt}\n\nTEXT:\n{pdf_text}"}
+        ]
+    )
+    
+    return json.loads(response.choices[0].message.content)
+```
+
+### Switch to Google Gemini
+
+1. Install Google package:
+```bash
+pip install google-generativeai
+```
+
+2. Replace the extraction method with Gemini API calls
 
 ## Project Structure
 
@@ -53,42 +149,37 @@ PDF-to-Excel-Converter/
     
 ```
 
-## Use Cases
+## ⚠️ Important Notes
 
-This tool is perfect for converting:
-- 📋 **Unstructured Reports** - Transform narrative reports into structured data
-- 📄 **Documents with Mixed Content** - PDFs containing paragraphs, lists, and scattered information
-- 📝 **Forms and Applications** - Extract field-value pairs from filled forms
-- 📊 **Legacy Documents** - Modernize old documents into spreadsheet format
-- 🗂️ **Data Extraction** - Pull specific information from large documents
-- 📑 **Text-heavy PDFs** - Convert descriptive content into analytical format
+- **API Costs**: Groq API calls are free - with limited access
+- **Rate Limits**: Anthropic has rate limits on API calls
+- **PDF Quality**: Works best with text-based PDFs (not scanned images)
+- **Data Privacy**: Ensure compliance when processing sensitive documents
 
-## Supported PDF Types
+## 🐛 Troubleshooting
 
-- ✅ PDFs with unstructured text content
-- ✅ Documents with mixed layouts (text + tables)
-- ✅ Reports and narratives
-- ✅ Forms with key-value pairs
-- ✅ Multi-page documents with varying formats
-- ✅ Text-based PDFs (non-image)
-- ⚠️ Image-based/Scanned PDFs (requires OCR preprocessing)
-- ⚠️ PDFs with complex graphics (focuses on text extraction)
+### "GROQ_API_KEY not found"
+- Set the environment variable or hardcode in script
 
-## Troubleshooting
+### "Error parsing JSON"
+- Check API response format
+- Verify Groq API is working correctly
 
-### Java Not Found Error
-If you encounter dependency errors, ensure all packages are properly installed:
-```bash
-# Reinstall dependencies
-pip install --upgrade pip
-pip install -r requirements.txt
-```
+### Missing data in output
+- Increase `max_tokens` in the API call
+- Check PDF text extraction quality
 
-### Empty Excel Output
-- Ensure your PDF contains extractable text (not just images)
-- Check if the PDF is password-protected or encrypted
-- Verify the PDF structure is readable
-- Try adjusting parsing parameters for different document layouts
+### PDF reading errors
+- Ensure PDF is not password-protected
+- Try alternative PDF libraries (pdfplumber, pypdf)
+
+
+## 🔐 Security Best Practices
+
+- Never commit API keys to Git
+- Use environment variables for sensitive data
+- Add `.env` files to `.gitignore`
+- Rotate API keys regularly
 
 ## Author
 
@@ -104,8 +195,6 @@ pip install -r requirements.txt
 ## Support
 
 If you find this project helpful, please give it a ⭐ on GitHub!
-
-For issues and feature requests, please use the [Issues](https://github.com/UzmaKhatun/PDF-to-Excel-Converter/issues) page.
 
 ---
 
