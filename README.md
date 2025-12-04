@@ -53,15 +53,6 @@ PDF-to-Excel-Converter/
     
 ```
 
-## How It Works
-
-1. **PDF Text Extraction** - Reads and extracts all text content from the PDF file
-2. **Pattern Recognition** - Identifies patterns, key-value pairs, and data structures in unstructured text
-3. **Data Parsing** - Intelligently parses the extracted text to identify relevant information
-4. **Structure Mapping** - Maps unstructured data into structured rows and columns
-5. **Data Cleaning** - Removes duplicates, empty entries, and formats data consistently
-6. **Excel Generation** - Creates a well-organized Excel file with headers and formatted cells
-
 ## Use Cases
 
 This tool is perfect for converting:
