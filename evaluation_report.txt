@@ -1,0 +1,12 @@
+======================================================================
+STANDALONE EVALUATION REPORT
+======================================================================
+
+Input PDF: Sample_Data_Input.pdf
+Generated Excel: Output.xlsx
+
+Total Score: 86/100
+Grade: A Very Good
+Feedback: Great work! Minor improvements possible.
+
+Evaluation Date: 2025-12-04 19:21:37
